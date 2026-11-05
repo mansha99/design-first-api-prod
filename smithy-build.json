@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "maven": {
+    "dependencies": ["software.amazon.smithy:smithy-openapi:1.74.1"]
+  },
+  "sources": ["smithy-model"],
+  "plugins": {
+    "openapi": {
+      "service": "com.example.contacts#ContactService",
+      "jsonAdd": {
+        "/servers": [
+          {
+            "url": "https://127.0.0.1:8000",
+            "description": "Production server"
+          }
+        ]
+      },
+      "protocol": "aws.protocols#restJson1",
+      "openapiVersion": "3.1.0",
+      "jsonAddings": {
+        "info": {
+          "title": "Contact Manager Service API",
+          "version": "1.0.0"
+        }
+      }
+    }
+  }
+}

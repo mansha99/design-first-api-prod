@@ -1,0 +1,129 @@
+{
+  "schemathesis_version": "4.33.1",
+  "command": "st run ./build/smithy/source/openapi/ContactService.openapi.json --url http://localhost:4010 --report-json-path ./report.json",
+  "seed": 100165107275796945615609265285009856703,
+  "started_at": "2026-11-05T18:29:20.376858+00:00",
+  "running_time": 30.56569670799945,
+  "stop_reason": "completed",
+  "complete": true,
+  "exit_code": 1,
+  "operations": {
+    "total": 3,
+    "selected": 3,
+    "tested": 3,
+    "errored": 0,
+    "skipped": 0,
+    "skip_reasons": []
+  },
+  "phases": {
+    "examples": {
+      "status": "success",
+      "skip_reason": null
+    },
+    "coverage": {
+      "status": "failure",
+      "skip_reason": null
+    },
+    "fuzzing": {
+      "status": "error",
+      "skip_reason": null
+    },
+    "stateful": {
+      "status": "skip",
+      "skip_reason": "not_applicable"
+    }
+  },
+  "test_cases": {
+    "generated": 26,
+    "with_failures": 4,
+    "unique_failures": 4,
+    "without_checks": 0,
+    "errored": 3
+  },
+  "failures": [
+    {
+      "type": "JsonSchemaError",
+      "code": "ST108",
+      "title": "Response violates schema",
+      "severity": "high",
+      "count": 2,
+      "operations": [
+        "GET /v1/contacts",
+        "GET /v1/contacts/{mobileNumber}"
+      ]
+    },
+    {
+      "type": "UnsupportedMethodResponse",
+      "code": "ST204",
+      "title": "Wrong response to undeclared method",
+      "severity": "medium",
+      "count": 2,
+      "operations": [
+        "TRACE /v1/contacts",
+        "TRACE /v1/contacts/{mobileNumber}"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "title": "Network Error",
+      "count": 1
+    }
+  ],
+  "baseline": null,
+  "filtered": 0,
+  "warnings": {
+    "missing_auth": [],
+    "base_url_mismatch": [],
+    "missing_test_data": [],
+    "validation_mismatch": [],
+    "missing_deserializer": [],
+    "unused_openapi_auth": [],
+    "unsupported_regex": [],
+    "method_not_allowed": [],
+    "constants_extraction": [],
+    "unmatched_filter": [],
+    "unresolvable_reference": [],
+    "unsupported_field": [],
+    "low_valid_rate": [],
+    "rate_limited": [],
+    "not_served": [],
+    "dictionary_mismatch": []
+  },
+  "valid_rates": {
+    "POST /v1/contacts": {
+      "examples": {
+        "accepted": 1,
+        "unreachable": 0,
+        "conflicts": 0,
+        "rejected": 0
+      },
+      "fuzzing": {
+        "accepted": 16,
+        "unreachable": 0,
+        "conflicts": 0,
+        "rejected": 0
+      }
+    },
+    "GET /v1/contacts": {
+      "fuzzing": {
+        "accepted": 1,
+        "unreachable": 0,
+        "conflicts": 0,
+        "rejected": 0
+      }
+    },
+    "GET /v1/contacts/{mobileNumber}": {
+      "fuzzing": {
+        "accepted": 1,
+        "unreachable": 0,
+        "conflicts": 0,
+        "rejected": 0
+      }
+    }
+  },
+  "auth": {
+    "reauth_count": 0,
+    "reauth_broke": false
+  }
+}

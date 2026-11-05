@@ -1,0 +1,18 @@
+# 1. Base Framework (Inherited styles)
+extends: [[spectral:oas, recommended]]
+
+
+rules:
+  info-contact: off
+  info-description: off
+  operation-tags: off
+  # Define an entirely new rule
+  must-have-versioning:
+    description: "API paths must contain an explicit major version identifier (e.g., /v1/)."
+    message: "{{error}} at {{property}}"
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^\\/v[0-9]+"

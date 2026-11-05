@@ -1,0 +1,293 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "ContactService",
+        "version": "2026-11-05"
+    },
+    "paths": {
+        "/v1/contacts": {
+            "get": {
+                "description": "This operation list all contacts",
+                "operationId": "ListContacts",
+                "parameters": [
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "nextToken",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ListContacts 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListContactsResponseContent"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This operation creates a new contact",
+                "operationId": "CreateContact",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateContactRequestContent"
+                            },
+                            "examples": {
+                                "CreateContact_example1": {
+                                    "summary": "Create a New Contact",
+                                    "description": "This example shows How to create a valid contact",
+                                    "value": {
+                                        "mobileNumber": "9876512345",
+                                        "name": "Smith"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "CreateContact 201 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateContactResponseContent"
+                                },
+                                "examples": {
+                                    "CreateContact_example1": {
+                                        "summary": "Create a New Contact",
+                                        "description": "This example shows How to create a valid contact",
+                                        "value": {
+                                            "mobileNumber": "9876512345",
+                                            "name": "Smith"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationException 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationExceptionResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "ConflictException 409 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictExceptionResponseContent"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/contacts/{mobileNumber}": {
+            "get": {
+                "description": "This operation checks if mobile number already exist",
+                "operationId": "CheckContactExists",
+                "parameters": [
+                    {
+                        "name": "mobileNumber",
+                        "in": "path",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[6-9][0-9]{9}$"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CheckContactExists 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CheckContactExistsResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationException 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationExceptionResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ResourceNotFoundException 404 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceNotFoundExceptionResponseContent"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CheckContactExistsResponseContent": {
+                "type": "object",
+                "properties": {
+                    "exists": {
+                        "type": "boolean"
+                    },
+                    "mobileNumber": {
+                        "type": "string",
+                        "pattern": "^[6-9][0-9]{9}$"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "exists",
+                    "mobileNumber"
+                ]
+            },
+            "ConflictExceptionResponseContent": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ContactSummary": {
+                "type": "object",
+                "properties": {
+                    "mobileNumber": {
+                        "type": "string",
+                        "pattern": "^[6-9][0-9]{9}$"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "mobileNumber",
+                    "name"
+                ]
+            },
+            "CreateContactRequestContent": {
+                "type": "object",
+                "properties": {
+                    "mobileNumber": {
+                        "type": "string",
+                        "pattern": "^[6-9][0-9]{9}$"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "mobileNumber",
+                    "name"
+                ]
+            },
+            "CreateContactResponseContent": {
+                "type": "object",
+                "properties": {
+                    "mobileNumber": {
+                        "type": "string",
+                        "pattern": "^[6-9][0-9]{9}$"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "mobileNumber",
+                    "name"
+                ]
+            },
+            "ListContactsResponseContent": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContactSummary"
+                        }
+                    },
+                    "nextToken": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "items"
+                ]
+            },
+            "ResourceNotFoundExceptionResponseContent": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ValidationExceptionResponseContent": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://127.0.0.1:8000",
+            "description": "Production server"
+        }
+    ]
+}
